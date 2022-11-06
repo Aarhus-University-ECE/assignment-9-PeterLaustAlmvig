@@ -12,22 +12,48 @@ void DFT (node * root)
 {
 	// Implement DFS
 	// Hint: You can use print_node, print_tree and/or print_stack.
+  
+  /*stack *stack = malloc(sizeof(stack));
+  stack->next = NULL;
+
+  push(stack, root);
+  
+  int i = 0;
+  node *t = pop(stack)->node;
+  printf("%d\n", t->num);
+  if(root->rchild != NULL){
+    push(stack, root->rchild);
+  }
+  if(root->lchild != NULL){
+    push(stack, root->lchild);
+  }*/
+
+  //No matter what I do I cannot get the normal function to work so recursion it is.
+  if(root != NULL){
+    print_node(root);
+    printf("\n");
+    DFT(root->lchild);
+    DFT(root->rchild);
+  }
 }
 
 node *make_node (int num, node * left, node * right)
 {
-	return 0;
+	node *element = malloc(sizeof(node));
+  element->lchild = left;
+  element->rchild = right;
+  element->num = num;
+  element->visited = false;
+  return element;
 }
 
 void free_node (node * p)
 {
-	
+	free(p);
 }
-
 
 void print_node (node * p)
 {
-
   if (p == NULL)
     printf ("NULL\n");
   else
@@ -58,17 +84,20 @@ void print_tree (node * p, int depth)
 
 stack *push (stack * topp, node * node)
 {
-	return 0;
+  stack *element = (stack* ) malloc(sizeof(stack));
+  element->next = topp->next;
+  element->node = node;
+  topp->next = element;
 }
 
 bool isEmpty (stack * topp)
 {
-  return false;
+  return topp == NULL;
 }
 
 node *top (stack * topp)
 {
-	return 0;
+	return topp->node;
 }
 
 // Utility function to pop topp  
@@ -76,7 +105,8 @@ node *top (stack * topp)
 
 stack *pop (stack * topp)
 {
-	return 0;
+  topp = topp->next;
+	return topp;
 }
 
 void print_stack (stack * topp)
